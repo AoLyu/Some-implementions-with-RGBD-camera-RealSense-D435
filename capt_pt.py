@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 from datetime import datetime
 from open3d import *
-import pcl
+import os
 
 if __name__=="__main__":
     align = rs.align(rs.stream.color)
@@ -22,9 +22,9 @@ if __name__=="__main__":
     
     geometrie_added = False
     vis = Visualizer()
-    vis.create_window("Tests")
+    vis.create_window("Pointcloud",640,480)
     pointcloud = PointCloud()
-
+    i = 0
 
     while True:
         dt0 = datetime.now()
@@ -49,7 +49,6 @@ if __name__=="__main__":
         color_image1 = cv2.cvtColor(color_image, cv2.COLOR_RGB2BGR)
 
         cv2.namedWindow('color image', cv2.WINDOW_AUTOSIZE)
-        # cv2.imshow('color image',color_image1)
         cv2.imshow('color image', cv2.cvtColor(color_image, cv2.COLOR_RGB2BGR))
         cv2.namedWindow('depth image', cv2.WINDOW_AUTOSIZE)
         cv2.imshow('depth image', depth_image )
@@ -75,25 +74,26 @@ if __name__=="__main__":
         vis.poll_events()
         vis.update_renderer()
         process_time = datetime.now() - dt0
-        print("FPS = {0}".format(1/process_time.total_seconds()))
+        print("FPS = {0}".format(int(1/process_time.total_seconds())))
 
 
         key = cv2.waitKey(1)
 
         if key & 0xFF == ord('s'):
-            cv2.imwrite('depth.png',depth_image)
-            cv2.imwrite('color.png',color_image1)
-            write_point_cloud('./pc_color.pcd', pcd)
+            if not os.path.exists('./output/'): 
+                os.makedirs('./output')
+            cv2.imwrite('./output/depth_'+str(i)+'.png',depth_image)
+            cv2.imwrite('./output/color_'+str(i)+'.png',color_image1)
+            write_point_cloud('./output/pointcloud_'+str(i)+'.pcd', pcd)
+            i += 1
 
-            cv2.destroyAllWindows()
-            vis.destroy_window()
 
-            break
         
         # Press esc or 'q' to close the image window
-        elif key & 0xFF == ord('q') or key == 27:
+        if key & 0xFF == ord('q') or key == 27:
             cv2.destroyAllWindows()
             vis.destroy_window()
+
             break
 
 
@@ -103,11 +103,6 @@ if __name__=="__main__":
     # rgbd = create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False);
     # pcd = create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)                                                   
     # pcd.transform([[1,0,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]])
-    print(type(depth_image))
-    print(type(color_image))
-
-    print(type(depth))
-    print(type(color))
 
     pipeline.stop()
 
