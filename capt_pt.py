@@ -74,7 +74,7 @@ if __name__=="__main__":
         vis.poll_events()
         vis.update_renderer()
         process_time = datetime.now() - dt0
-        print("FPS = {0}".format(int(1/process_time.total_seconds())))
+        # print("FPS = {0}".format(int(1/process_time.total_seconds())))
 
 
         key = cv2.waitKey(1)
@@ -85,6 +85,7 @@ if __name__=="__main__":
             cv2.imwrite('./output/depth_'+str(i)+'.png',depth_image)
             cv2.imwrite('./output/color_'+str(i)+'.png',color_image1)
             write_point_cloud('./output/pointcloud_'+str(i)+'.pcd', pcd)
+            print('No.'+str(i)+' shot is saved.' )
             i += 1
 
 
