@@ -1,12 +1,13 @@
 # Save_pointcloud_with_realsenseD435
 This script is written accoding to the code mentioned in the issue [Convert Realsense poincloud in Open3D pointcloud](https://github.com/IntelVCL/Open3D/issues/473)
 
-## Install
-[Open3D](https://github.com/IntelVCL/Open3D) is required.
+## Requirements
+numpy
+[opencv](https://pypi.org/project/opencv-python/)
+[pyrealsense2](https://pypi.org/project/pyrealsense2/)
+[Open3D](https://github.com/IntelVCL/Open3D)
 
-```python
-pip install open3d-python
-```
+
 ## Usage:
 ```python
 python capt_pt.py
