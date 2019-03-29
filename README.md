@@ -4,6 +4,7 @@ This script is written accoding to the code mentioned in the issue [Convert Real
 ## Requirements
 * numpy
 * [opencv](https://pypi.org/project/opencv-python/)
+* [Install the latest Intel® RealSense™ SDK 2.0](https://github.com/IntelRealSense/librealsense/blob/master/doc/distribution_linux.md)
 * [pyrealsense2](https://pypi.org/project/pyrealsense2/)
 * [Open3D](https://github.com/IntelVCL/Open3D)
 
