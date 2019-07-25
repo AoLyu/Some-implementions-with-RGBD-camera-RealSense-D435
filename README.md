@@ -2,9 +2,9 @@
 This script is written accoding to the code mentioned in the issue [Convert Realsense poincloud in Open3D pointcloud](https://github.com/IntelVCL/Open3D/issues/473)
 
 ## Requirements
-* [numpy](https://pypi.org/project/numpy/)
-* [opencv](https://pypi.org/project/opencv-python/)
-* [pyrealsense2](https://pypi.org/project/pyrealsense2/)
+* [NumPy](https://pypi.org/project/numpy/)
+* [OpenCV](https://pypi.org/project/opencv-python/)
+* [PyRealsense2](https://pypi.org/project/pyrealsense2/)
 * [Open3D](https://github.com/IntelVCL/Open3D)
 
 
