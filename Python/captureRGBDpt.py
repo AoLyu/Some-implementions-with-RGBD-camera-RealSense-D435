@@ -1,7 +1,7 @@
 import pyrealsense2 as rs
 import numpy as np
 import cv2
-from datetime import datetime
+import time
 from open3d import *
 import os
 
@@ -26,85 +26,76 @@ if __name__=="__main__":
     pointcloud = PointCloud()
     i = 0
 
-    while True:
-        dt0 = datetime.now()
-        pointcloud.clear()
+    try:
+        while True:
+            time_start = time.time()
+            pointcloud.clear()
 
-        frames = pipeline.wait_for_frames()
-        aligned_frames = align.process(frames)
+            frames = pipeline.wait_for_frames()
+            aligned_frames = align.process(frames)
 
-        color_frame = aligned_frames.get_color_frame()
-        color_image = np.asanyarray(color_frame.get_data())
-        depth_frame = aligned_frames.get_depth_frame()
+            color_frame = aligned_frames.get_color_frame()
+            color_image = np.asanyarray(color_frame.get_data())
+            depth_frame = aligned_frames.get_depth_frame()
 
-        depth_frame = rs.decimation_filter(1).process(depth_frame)
-        depth_frame = rs.disparity_transform(True).process(depth_frame)
-        depth_frame = rs.spatial_filter().process(depth_frame)
-        depth_frame = rs.temporal_filter().process(depth_frame)
-        depth_frame = rs.disparity_transform(False).process(depth_frame)
-        # depth_frame = rs.hole_filling_filter().process(depth_frame)
-        
+            depth_frame = rs.decimation_filter(1).process(depth_frame)
+            depth_frame = rs.disparity_transform(True).process(depth_frame)
+            depth_frame = rs.spatial_filter().process(depth_frame)
+            depth_frame = rs.temporal_filter().process(depth_frame)
+            depth_frame = rs.disparity_transform(False).process(depth_frame)
+            # depth_frame = rs.hole_filling_filter().process(depth_frame)
+            
 
-        depth_image = np.asanyarray(depth_frame.get_data())
-        color_image1 = cv2.cvtColor(color_image, cv2.COLOR_RGB2BGR)
+            depth_image = np.asanyarray(depth_frame.get_data())
+            color_image1 = cv2.cvtColor(color_image, cv2.COLOR_RGB2BGR)
 
-        cv2.namedWindow('color image', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('color image', cv2.cvtColor(color_image, cv2.COLOR_RGB2BGR))
-        cv2.namedWindow('depth image', cv2.WINDOW_AUTOSIZE)
-        cv2.imshow('depth image', depth_image )
+            cv2.namedWindow('color image', cv2.WINDOW_AUTOSIZE)
+            cv2.imshow('color image', cv2.cvtColor(color_image, cv2.COLOR_RGB2BGR))
+            cv2.namedWindow('depth image', cv2.WINDOW_AUTOSIZE)
+            cv2.imshow('depth image', depth_image )
 
-        depth = Image(depth_image)
-        color = Image(color_image)
+            depth = Image(depth_image)
+            color = Image(color_image)
 
-        
+            rgbd = create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
+            pcd = create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
+            pcd.transform([[1,0,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]])
+            # pcd = voxel_down_sample(pcd, voxel_size = 0.003)
 
-        rgbd = create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
-        pcd = create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
-        pcd.transform([[1,0,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]])
-        # pcd = voxel_down_sample(pcd, voxel_size = 0.003)
+            pointcloud += pcd
 
-        pointcloud += pcd
-
-        if not geometrie_added:
-             vis.add_geometry(pointcloud)
-             geometrie_added = True
-
-
-        vis.update_geometry()
-        vis.poll_events()
-        vis.update_renderer()
-        process_time = datetime.now() - dt0
-        # print("FPS = {0}".format(int(1/process_time.total_seconds())))
+            if not geometrie_added:
+                vis.add_geometry(pointcloud)
+                geometrie_added = True
 
 
-        key = cv2.waitKey(1)
+            vis.update_geometry()
+            vis.poll_events()
+            vis.update_renderer()
+            time_end = time.time()
 
-        if key & 0xFF == ord('s'):
-            if not os.path.exists('./output/'): 
-                os.makedirs('./output')
-            cv2.imwrite('./output/depth_'+str(i)+'.png',depth_image)
-            cv2.imwrite('./output/color_'+str(i)+'.png',color_image1)
-            write_point_cloud('./output/pointcloud_'+str(i)+'.pcd', pcd)
-            print('No.'+str(i)+' shot is saved.' )
-            i += 1
+            key = cv2.waitKey(1)
 
+            print("FPS = {0}".format(int(1/(time_end-time_start))))
 
-        
-        # Press esc or 'q' to close the image window
-        if key & 0xFF == ord('q') or key == 27:
-            cv2.destroyAllWindows()
-            vis.destroy_window()
+            # press 's' to save current RGBD images and pointcloud.
+            if key & 0xFF == ord('s'):
+                if not os.path.exists('./output/'): 
+                    os.makedirs('./output')
+                cv2.imwrite('./output/depth_'+str(i)+'.png',depth_image)
+                cv2.imwrite('./output/color_'+str(i)+'.png',color_image1)
+                write_point_cloud('./output/pointcloud_'+str(i)+'.pcd', pcd)
+                print('No.'+str(i) + ' shot is saved.' )
+                i += 1
 
-            break
+            
+            # Press esc or 'q' to close the image window
+            if key & 0xFF == ord('q') or key == 27:
+                cv2.destroyAllWindows()
+                vis.destroy_window()
 
-
-    # depth = Image(depth_image)
-    # color = Image(color_image)
-
-    # rgbd = create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False);
-    # pcd = create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)                                                   
-    # pcd.transform([[1,0,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]])
-
-    pipeline.stop()
+                break
+    finally:
+        pipeline.stop()
 
 
