@@ -9,6 +9,6 @@ In order to improve my programming skills and habits,I tried to provide those co
 ## Platform
 Ubuntu 16.04
 
-##Screenshots
+## Screenshots
 Python version
 ![result](./Python/doc/result1.png)
