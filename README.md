@@ -1,5 +1,5 @@
 # Some Useful Code with RealsenseD435
-Inorder to improve my programming skills and habits,I tried to provide those code in two versions.
+In order to improve my programming skills and habits,I tried to provide those code in two versions.
 
 ## Contents
 * Real-time capture RGBD pointcloud and save RGBD images.(Python,C++)
