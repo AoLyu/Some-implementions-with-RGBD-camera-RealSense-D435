@@ -1,23 +1,14 @@
-# Capture_pointcloud_with_realsenseD435
-This script is written accoding to the code mentioned in the issue [Convert Realsense poincloud in Open3D pointcloud](https://github.com/IntelVCL/Open3D/issues/473)
+# Some Useful Code with RealsenseD435
+Inorder to improve my programming skills and habits,I tried to provide those code in two versions.
 
-## Requirements
-* [NumPy](https://pypi.org/project/numpy/)
-* [OpenCV](https://pypi.org/project/opencv-python/)
-* [PyRealsense2](https://pypi.org/project/pyrealsense2/)
-* [Open3D](https://github.com/IntelVCL/Open3D)
+## Contents
+* Real-time capture RGBD pointcloud and save RGBD images.(Python,C++)
+* Record RGBD stream as '.bag' file.(Python,C++)
+* Read RGBD '.bag' file.(Python,C++)
 
+## Platform
+Ubuntu 16.04
 
-## Usage:
-```python
-python capt_pt.py
-```
-
-Press ‘s’ on the image(depth or color) window，the current rgb-d images and pointcloud will be saved.
-
-Press 'q' ,the pipeline will be stopped.
-
-![result](doc/result1.png)
-![result](doc/result2.png)
-
- 
+##Screenshots
+Python version
+![result](./Python/doc/result1.png)
