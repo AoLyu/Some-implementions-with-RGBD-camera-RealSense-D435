@@ -11,7 +11,7 @@ This script is written accoding to the code mentioned in the issue [Convert Real
 ## Usage:
 **Capture RGB-D images and colored pointcloud**
 ```
-python captureRGBDpt
+python captureRGBDpt.py
 ```
 Press **‘s’** on the image(depth or color) window，the current rgb-d images and pointcloud will be saved.
 

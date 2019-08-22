@@ -16,10 +16,15 @@ Some personal implementation of 3d reconstruction with Realsense D435.
 * **Stereo Vision Using Double RealSense RGB cameras**
 > coming soon
 
+## Screenshots
+reconstruction of a Polar bear
+![result](./Doc/bear.gif)
+
+
+realtime registration of pointclouds from two cam.
+![result](./Doc/doubleCam.gif)
+
 ## Platform
 Ubuntu 16.04
-
-## Screenshots
-Polar bear
-![result](./Doc/bear.gif)
 ![result](./Doc/work_platform.jpg)
+
