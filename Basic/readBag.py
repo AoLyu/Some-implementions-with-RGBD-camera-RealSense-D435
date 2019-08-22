@@ -10,16 +10,16 @@ import os
 if __name__=="__main__":
     parser = argparse.ArgumentParser(description="Read recorded bag file and display depth stream in jet colormap.\
                                     Remember to change the stream resolution, fps and format to match the recorded.")
-    # Add argument which takes path to a bag file as an input
+
     parser.add_argument("-i", "--input", type=str, help="Path to the bag file")
-    # Parse the command line arguments to an object
+
     args = parser.parse_args()
-    # Safety if no parameter have been given
+
     if not args.input:
         print("No input paramater have been given.")
         print("For help type --help")
         exit()
-    # Check if the given file have bag extension
+
     if os.path.splitext(args.input)[1] != ".bag":
         print("The given file is not of correct file format.")
         print("Only .bag files are accepted")
@@ -28,19 +28,17 @@ if __name__=="__main__":
     align = rs.align(rs.stream.color)
     pipeline = rs.pipeline()
     config = rs.config()
-    # Tell config that we will use a recorded device from filem to be used by the pipeline through playback.
+
     rs.config.enable_device_from_file(config, args.input)
-    # Configure the pipeline to stream the depth stream
+
     config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
     config.enable_stream(rs.stream.color, 640, 480, rs.format.rgb8, 30)
 
-    # Start streaming from file
+
     profile = pipeline.start(config)
 
     intr = profile.get_stream(rs.stream.color).as_video_stream_profile().get_intrinsics()
-    # print( 'camera_intrinsic', intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
 
-    # Create opencv window to render image in
     cv2.namedWindow("Depth Stream", cv2.WINDOW_AUTOSIZE)
     cv2.namedWindow("Color Stream", cv2.WINDOW_AUTOSIZE)
     pinhole_camera_intrinsic = PinholeCameraIntrinsic(intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
@@ -52,7 +50,6 @@ if __name__=="__main__":
     pointcloud = PointCloud()
     i = 0
 
-    # Streaming loop
     try:
         while True:
             time_start = time.time()
@@ -110,10 +107,10 @@ if __name__=="__main__":
                 print('No.'+str(i)+' shot is saved.' )
                 i += 1
 
-            # if pressed escape exit program
             elif key & 0xFF == ord('q') or key == 27 :
                 cv2.destroyAllWindows()
+                vis.destroyAllWindows()
                 break
 
     finally:
-        pass
+        pipeline.stop()
