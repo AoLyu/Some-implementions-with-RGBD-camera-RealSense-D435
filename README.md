@@ -21,7 +21,7 @@ reconstruction of a Polar bear
 ![result](./Doc/bear.gif)
 
 
-realtime registration of pointclouds from two cam.
+realtime registration of pointclouds from two cams.
 ![result](./Doc/doubleCam.gif)
 ![result](./Doc/work_platform.jpg)
 
