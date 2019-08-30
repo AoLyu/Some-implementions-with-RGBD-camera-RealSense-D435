@@ -3,8 +3,40 @@ import numpy as np
 import cv2
 import argparse
 import time
-from open3d import *
+import open3d as o3d
 import os
+
+view_ind = 0
+breakLoopFlag = 0
+backgroundColorFlag = 1
+
+def saveCurrentRGBD(vis):
+    global view_ind
+    if not os.path.exists('./output/'): 
+        os.makedirs('./output')
+    cv2.imwrite('./output/depth_'+str(view_ind)+'.png',depth_image)
+    cv2.imwrite('./output/color_'+str(view_ind)+'.png',color_image1)
+    o3d.io.write_point_cloud('./output/pointcloud_'+str(view_ind)+'.pcd', pcd)
+    print('No.'+str(view_ind)+' shot is saved.' )
+    view_ind += 1
+    return False
+
+def breakLoop(vis):
+    global breakLoopFlag
+    breakLoopFlag +=1
+    return False
+
+def change_background_color(vis):
+    global backgroundColorFlag
+    opt = vis.get_render_option()
+    if backgroundColorFlag:
+        opt.background_color = np.asarray([0, 0, 0])
+        backgroundColorFlag = 0
+    else:
+        opt.background_color = np.asarray([1, 1, 1])
+        backgroundColorFlag = 1
+    # background_color ~=backgroundColorFlag
+    return False
 
 
 if __name__=="__main__":
@@ -41,14 +73,17 @@ if __name__=="__main__":
 
     cv2.namedWindow("Depth Stream", cv2.WINDOW_AUTOSIZE)
     cv2.namedWindow("Color Stream", cv2.WINDOW_AUTOSIZE)
-    pinhole_camera_intrinsic = PinholeCameraIntrinsic(intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
+    pinhole_camera_intrinsic = o3d.camera.PinholeCameraIntrinsic(intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
 
     geometrie_added = False
-    vis = Visualizer()
+    vis = o3d.visualization.VisualizerWithKeyCallback()
 
     vis.create_window("Pointcloud")
-    pointcloud = PointCloud()
-    i = 0
+    pointcloud = o3d.geometry.PointCloud()
+
+    vis.register_key_callback(ord(" "), saveCurrentRGBD)
+    vis.register_key_callback(ord("Q"), breakLoop)
+    vis.register_key_callback(ord("K"), change_background_color)
 
     try:
         while True:
@@ -66,11 +101,11 @@ if __name__=="__main__":
 
             cv2.imshow('Color Stream', color_image1)
 
-            depth = Image(depth_image)
-            color = Image(color_image)
+            depth = o3d.geometry.Image(depth_image)
+            color = o3d.geometry.Image(color_image)
 
-            rgbd = create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
-            pcd = create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
+            rgbd = o3d.geometry.create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
+            pcd = o3d.geometry.create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
             pcd.transform([[1,0,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]])
 
             if not pcd:
@@ -98,19 +133,24 @@ if __name__=="__main__":
             time_end = time.time()
             # print("FPS = {0}".format(int(1/(time_end - time_start))))
 
-            if key & 0xFF == ord('s'):
+            if key & 0xFF == ord(' '):
                 if not os.path.exists('./output/'): 
                     os.makedirs('./output')
-                cv2.imwrite('./output/depth_'+str(i)+'.png',depth_image)
-                cv2.imwrite('./output/color_'+str(i)+'.png',color_image1)
-                write_point_cloud('./output/pointcloud_'+str(i)+'.pcd', pcd)
-                print('No.'+str(i)+' shot is saved.' )
-                i += 1
+                cv2.imwrite('./output/depth_'+str(view_ind)+'.png',depth_image)
+                cv2.imwrite('./output/color_'+str(view_ind)+'.png',color_image1)
+                o3d.io.write_point_cloud('./output/pointcloud_'+str(view_ind)+'.pcd', pcd)
+                print('No.'+str(view_ind)+' shot is saved.' )
+                view_ind += 1
 
             elif key & 0xFF == ord('q') or key == 27 :
                 cv2.destroyAllWindows()
-                vis.destroyAllWindows()
+                vis.destroy_window()
                 break
+
+            if breakLoopFlag:
+                cv2.destroyAllWindows()
+                vis.destroy_window()
+                break                
 
     finally:
         pipeline.stop()

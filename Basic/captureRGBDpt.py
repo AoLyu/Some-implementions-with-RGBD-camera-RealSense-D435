@@ -2,8 +2,40 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 import time
-from open3d import *
+import open3d as o3d 
 import os
+
+view_ind = 0
+breakLoopFlag = 0
+backgroundColorFlag = 1
+
+def saveCurrentRGBD(vis):
+    global view_ind
+    if not os.path.exists('./output/'): 
+        os.makedirs('./output')
+    cv2.imwrite('./output/depth_'+str(view_ind)+'.png',depth_image)
+    cv2.imwrite('./output/color_'+str(view_ind)+'.png',color_image1)
+    o3d.io.write_point_cloud('./output/pointcloud_'+str(view_ind)+'.pcd', pcd)
+    print('No.'+str(view_ind)+' shot is saved.' )
+    view_ind += 1
+    return False
+
+def breakLoop(vis):
+    global breakLoopFlag
+    breakLoopFlag +=1
+    return False
+
+def change_background_color(vis):
+    global backgroundColorFlag
+    opt = vis.get_render_option()
+    if backgroundColorFlag:
+        opt.background_color = np.asarray([0, 0, 0])
+        backgroundColorFlag = 0
+    else:
+        opt.background_color = np.asarray([1, 1, 1])
+        backgroundColorFlag = 1
+    # background_color ~=backgroundColorFlag
+    return False
 
 if __name__=="__main__":
     align = rs.align(rs.stream.color)
@@ -16,19 +48,22 @@ if __name__=="__main__":
 
     # get camera intrinsics
     intr = profile.get_stream(rs.stream.color).as_video_stream_profile().get_intrinsics()
-    print(intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
-    pinhole_camera_intrinsic = PinholeCameraIntrinsic(intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
+    # print(intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
+    pinhole_camera_intrinsic = o3d.camera.PinholeCameraIntrinsic(intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
     # print(type(pinhole_camera_intrinsic))
     
     geometrie_added = False
-    vis = Visualizer()
-    vis.create_window("Pointcloud",640,480)
-    pointcloud = PointCloud()
-    i = 0
+    vis = o3d.visualization.VisualizerWithKeyCallback()
+    vis.create_window("Pointcloud")
+    pointcloud = o3d.geometry.PointCloud()
+
+    vis.register_key_callback(ord(" "), saveCurrentRGBD)
+    vis.register_key_callback(ord("Q"), breakLoop)
+    vis.register_key_callback(ord("K"), change_background_color)
 
     try:
         while True:
-            time_start = time.time()
+            # time_start = time.time()
             pointcloud.clear()
 
             frames = pipeline.wait_for_frames()
@@ -45,6 +80,8 @@ if __name__=="__main__":
             depth_frame = rs.disparity_transform(False).process(depth_frame)
             # depth_frame = rs.hole_filling_filter().process(depth_frame)
             
+            depth_color_frame = rs.colorizer().colorize(depth_frame)
+            depth_color_image = np.asanyarray(depth_color_frame.get_data())
 
             depth_image = np.asanyarray(depth_frame.get_data())
             color_image1 = cv2.cvtColor(color_image, cv2.COLOR_RGB2BGR)
@@ -52,13 +89,13 @@ if __name__=="__main__":
             cv2.namedWindow('color image', cv2.WINDOW_AUTOSIZE)
             cv2.imshow('color image', cv2.cvtColor(color_image, cv2.COLOR_RGB2BGR))
             cv2.namedWindow('depth image', cv2.WINDOW_AUTOSIZE)
-            cv2.imshow('depth image', depth_image )
+            cv2.imshow('depth image', depth_color_image )
 
-            depth = Image(depth_image)
-            color = Image(color_image)
+            depth = o3d.geometry.Image(depth_image)
+            color = o3d.geometry.Image(color_image)
 
-            rgbd = create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
-            pcd = create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
+            rgbd = o3d.geometry.create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
+            pcd = o3d.geometry.create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
             pcd.transform([[1,0,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]])
             # pcd = voxel_down_sample(pcd, voxel_size = 0.003)
 
@@ -72,21 +109,21 @@ if __name__=="__main__":
             vis.update_geometry()
             vis.poll_events()
             vis.update_renderer()
-            time_end = time.time()
+            # time_end = time.time()
 
             key = cv2.waitKey(1)
 
-            print("FPS = {0}".format(int(1/(time_end-time_start))))
+            # print("FPS = {0}".format(int(1/(time_end-time_start))))
 
             # press 's' to save current RGBD images and pointcloud.
-            if key & 0xFF == ord('s'):
+            if key & 0xFF == ord(' '):
                 if not os.path.exists('./output/'): 
                     os.makedirs('./output')
-                cv2.imwrite('./output/depth_'+str(i)+'.png',depth_image)
-                cv2.imwrite('./output/color_'+str(i)+'.png',color_image1)
-                write_point_cloud('./output/pointcloud_'+str(i)+'.pcd', pcd)
-                print('No.'+str(i) + ' shot is saved.' )
-                i += 1
+                cv2.imwrite('./output/depth_'+str(view_ind)+'.png',depth_image)
+                cv2.imwrite('./output/color_'+str(view_ind)+'.png',color_image1)
+                o3d.write_point_cloud('./output/pointcloud_'+str(view_ind)+'.pcd', pcd)
+                print('No.'+str(view_ind) + ' shot is saved.' )
+                view_ind += 1
 
             
             # Press esc or 'q' to close the image window
@@ -95,6 +132,13 @@ if __name__=="__main__":
                 vis.destroy_window()
 
                 break
+
+            if breakLoopFlag:
+                cv2.destroyAllWindows()
+                vis.destroy_window()
+                break
+
+            
     finally:
         pipeline.stop()
 

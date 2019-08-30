@@ -13,28 +13,31 @@ This script is written accoding to the code mentioned in the issue [Convert Real
 ```
 python captureRGBDpt.py
 ```
-Press **‘s’** on the image(depth or color) window，the current rgb-d images and pointcloud will be saved.
+Press **‘ ’**(space) to save current RGBDimages and pointcloud.
 
-Press **'q'** ,the pipeline will be stopped.
+Press **‘k’** to change the background color of point cloud (black or white)
+
+Press **'q'** to break current pipeline and quit.
 
 **To record a '.bag' file**
 ```
-python readBag.py
+python recordBag.py
 ```
-Press **‘s’** on the image(depth or color) window，the current rgb-d images and colored pointcloud will be saved.
+Press **‘ ’**(space) to save current RGBDimages and pointcloud.
 
-Press **'q'** ,the pipeline will be stopped.And the rgb-d stream will be stored in a'.bag' file named timestamp like '2019-08-20_10:31:07.bag'.
+Press **‘k’** to change the background color of point cloud (black or white)
+
+Press **'q'** ,the pipeline will be stopped.And the rgb-d stream will be stored in a'.bag' file named by timestamp like '2019-08-20_10:31:07.bag'.
 
 **To read a '.bag' file**
 ```
-python -i your.bag
+python readBag.py -i your.bag
 ```
-Press **‘s’** on the image(depth or color) window，the current rgb-d images and pointcloud will be saved.
+Press **‘ ’**(space) to save current RGBDimages and pointcloud.
 
-Press **'q'** ,the pipeline will be stopped.
+Press **‘k’** to change the background color of point cloud (black or white)
 
+Press **'q'** to break current pipeline and quit.
 ## Screenshot
 ![result](./doc/result1.png)
 ![result](./doc/result2.png)
-
- 
