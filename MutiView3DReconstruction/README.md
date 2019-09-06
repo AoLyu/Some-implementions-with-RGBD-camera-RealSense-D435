@@ -12,7 +12,7 @@ To reproduce the Polarbear Pointcloud.
 ```
 python MutiViewReconstruction.py
 ```
-After a few minutes,it will generate a 'global.pcd'.
+After a few seconds,it will generate a 'global.pcd' file.
 
 ## Other Reconstructed Objects
 Peach(textureless)

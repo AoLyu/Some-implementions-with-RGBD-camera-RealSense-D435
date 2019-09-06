@@ -53,14 +53,14 @@ for j in range(cloud_number):
                 x,y,z = rgbdTools.getPosition(RealSense,depth,m2,n2)
 
                 Pt2.append([x,y,z])
-        for mm in range(0,480):
-            for nn in range(0,640):
-                x,y,z = rgbdTools.getPosition(RealSense,depth,mm,nn)
-                if  y < (TablePlane.a * x + TablePlane.c * z + TablePlane.d)/(-TablePlane.b) - 0.01 and z > 0.15 and z < 0.35:
+    for mm in range(0,480):
+        for nn in range(0,640):
+            x,y,z = rgbdTools.getPosition(RealSense,depth,mm,nn)
+            if  y < (TablePlane.a * x + TablePlane.c * z + TablePlane.d)/(-TablePlane.b) - 0.01 and z > 0.15 and z < 0.35:
 
-                    Pt4.append([x,y,z])
+                Pt4.append([x,y,z])
 
-                    Color2.append(rgbdTools.getColor(rgb,mm,nn))
+                Color2.append(rgbdTools.getColor(rgb,mm,nn))
 
     Point2.points = o3d.Vector3dVector(np.array(Pt2))
     Point3.points = o3d.Vector3dVector(np.array(Pt3))
