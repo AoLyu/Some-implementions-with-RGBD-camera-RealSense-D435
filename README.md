@@ -20,6 +20,7 @@ Some personal implementation of 3d reconstruction with Realsense D435.
 reconstruction of a Polar bear
 ![result](./Doc/bear.gif)
 
+![result](./Doc/bear2.gif)
 
 realtime registration of pointclouds from two cams.
 ![result](./Doc/doubleCam.gif)
