@@ -9,16 +9,17 @@ Some personal implementation of 3d reconstruction with Realsense D435.
 
 > 3.Read RGBD '.bag' file
 * **3D Object Reconstruction Based on Muti-view RGBD Images Using A Turntable**
-> 1.Using a turntable to reconstruct an object's 3d pointcloud.
+> Using a turntable to reconstruct an object's 3d pointcloud.
 
 * **Realtime 3D Reconstruction Using Double Opposing RealSenses**
-> coming soon
+> Using a double side chessBoard. 
 * **Stereo Vision Using Double RealSense RGB cameras**
-> coming soon
+> to be done
 
 ## Screenshots
 reconstruction of a Polar bear
-![result](./Doc/bear.gif)
+<!-- ![result](./Doc/bear.gif) -->
+<img src="./Doc/bear.gif" height="350" width="" >
 
 ![result](./Doc/bear2.gif)
 
