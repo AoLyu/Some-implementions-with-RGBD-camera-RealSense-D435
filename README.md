@@ -24,8 +24,9 @@ reconstruction of a Polar bear
 ![result](./Doc/bear2.gif)
 
 realtime registration of pointclouds from two cams.
-![result](./Doc/doubleCam.gif)
-![result](./Doc/work_platform.jpg)
+<img src="./Doc/doubleCam.gif" height="350" width="" >
+<!-- ![result](./Doc/doubleCam.gif) -->
+<img src="./Doc/work_platform.jpg" height="350" width="" >
 
 ## Platform
 Ubuntu 16.04
