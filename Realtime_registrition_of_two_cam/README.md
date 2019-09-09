@@ -21,4 +21,4 @@ later
 python Realtime.py
 ```
 you will see the registration result.
-![result](./doc/cup.gif)
+![result](./doc/little_duck.gif)
