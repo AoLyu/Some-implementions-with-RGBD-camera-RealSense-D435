@@ -12,7 +12,11 @@ Some personal implementation of 3d reconstruction with Realsense D435.
 > Using a turntable to reconstruct an object's 3d pointcloud.
 
 * **Realtime 3D Reconstruction Using Double Opposing RealSenses**
-> Using a double side chessBoard. 
+> Using a double side chessBoard.
+
+* **Object Recognition Using PointNet**
+
+ 
 * **Stereo Vision Using Double RealSense RGB cameras**
 > to be done
 
@@ -28,7 +32,8 @@ realtime registration of pointclouds from two cams.
 <!-- ![result](./Doc/doubleCam.gif) -->
 <img src="./Doc/work_platform.jpg" height="350" width="" >
 
+<img src="./Doc/work_platform.jpg" height="350" width="" >
+
+<img src="./ObjectRecognitionUsingPointNet/doc/1.png" height="350" width="" >
 ## Platform
 Ubuntu 16.04
-
-
