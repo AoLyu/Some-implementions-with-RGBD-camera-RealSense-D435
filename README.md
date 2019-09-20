@@ -31,7 +31,7 @@ realtime registration of pointclouds from two cams.
 <img src="./Doc/doubleCam.gif" height="350" width="" >
 
 object recognition using pointcloud
-<img src="./ObjectRecognitionUsingPointNet/doc/1.png" height="350" width="" >
+<img src="./ObjectRecognitionUsingPointNet/doc/screencut.gif" height="350" width="" >
 <!-- ![result](./Doc/doubleCam.gif) -->
 <img src="./Doc/work_platform.jpg" height="350" width="" >
 

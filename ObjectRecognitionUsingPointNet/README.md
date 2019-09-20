@@ -3,7 +3,7 @@
 ## Contents
 
 ## Screenshotsr
-<img src="./doc/1.png" height="350" width="" >
+<img src="./doc/screencut.gif" height="350" width="" >
 
 ## Platform
 Ubuntu 16.04
