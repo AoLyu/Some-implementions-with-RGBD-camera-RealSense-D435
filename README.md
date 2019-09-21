@@ -30,6 +30,9 @@ reconstruction of a Polar bear
 realtime registration of pointclouds from two cams.
 <img src="./Doc/doubleCam.gif" height="350" width="" >
 
+Realtime object recognition using PointNet.
+<img src="./Doc/PointNet.png" height="350" width="" >
+
 <!-- ![result](./Doc/doubleCam.gif) -->
 <img src="./Doc/work_platform.jpg" height="350" width="" >
 
