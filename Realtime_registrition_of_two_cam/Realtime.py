@@ -12,7 +12,7 @@ from tools import rgbdTools,registration
 
 if __name__ == '__main__':
 
-    chessBoard_num = 3
+    chessBoard_num = 4
 
     resolution_width = 1280 # pixels
     resolution_height = 720 # pixels
@@ -37,7 +37,7 @@ if __name__ == '__main__':
     pipeline_profile1 = pipeline1.start(rs_config)
 
     intr1 = pipeline_profile1.get_stream(rs.stream.color).as_video_stream_profile().get_intrinsics()
-    pinhole_camera1_intrinsic = o3d.PinholeCameraIntrinsic(intr1.width, intr1.height, intr1.fx, intr1.fy, intr1.ppx, intr1.ppy)
+    pinhole_camera1_intrinsic = o3d.camera.PinholeCameraIntrinsic(intr1.width, intr1.height, intr1.fx, intr1.fy, intr1.ppx, intr1.ppy)
     cam1 = rgbdTools.Camera(intr1.fx, intr1.fy, intr1.ppx, intr1.ppy)
     # print('cam1 intrinsics:')
     # print(intr1.width, intr1.height, intr1.fx, intr1.fy, intr1.ppx, intr1.ppy)
@@ -47,7 +47,7 @@ if __name__ == '__main__':
     pipeline_profile2 = pipeline2.start(rs_config)
 
     intr2 = pipeline_profile2.get_stream(rs.stream.color).as_video_stream_profile().get_intrinsics()
-    pinhole_camera2_intrinsic = o3d.PinholeCameraIntrinsic(intr2.width, intr2.height, intr2.fx, intr2.fy, intr2.ppx, intr2.ppy)
+    pinhole_camera2_intrinsic = o3d.camera.PinholeCameraIntrinsic(intr2.width, intr2.height, intr2.fx, intr2.fy, intr2.ppx, intr2.ppy)
     cam2 = rgbdTools.Camera(intr2.fx, intr2.fy, intr2.ppx, intr2.ppy)
     # print('cam2 intrinsics:')
     # print(intr2.width, intr2.height, intr2.fx, intr2.fy, intr2.ppx, intr2.ppy)
@@ -90,9 +90,9 @@ if __name__ == '__main__':
     print(Transformation)
 
     geometrie_added = False
-    vis = o3d.Visualizer()
+    vis = o3d.visualization.Visualizer()
     vis.create_window("Pointcloud")
-    pointcloud = o3d.PointCloud()
+    pointcloud = o3d.geometry.PointCloud()
 
     try:
         time_beigin = time.time()
@@ -121,21 +121,21 @@ if __name__ == '__main__':
             depth_image11 = np.where((depth_image1 > 1000) | (depth_image1 < 0), 0 , depth_image1)
             depth_image22 = np.where((depth_image2 > 1000) | (depth_image2 < 0), 0 , depth_image2)
 
-            depth1 = o3d.Image(depth_image11)
-            color1 = o3d.Image(cv2.cvtColor(color_image1, cv2.COLOR_BGR2RGB))
+            depth1 = o3d.geometry.Image(depth_image11)
+            color1 = o3d.geometry.Image(cv2.cvtColor(color_image1, cv2.COLOR_BGR2RGB))
 
 
-            depth2 = o3d.Image(depth_image22)
-            color2 = o3d.Image(cv2.cvtColor(color_image2, cv2.COLOR_BGR2RGB))
+            depth2 = o3d.geometry.Image(depth_image22)
+            color2 = o3d.geometry.Image(cv2.cvtColor(color_image2, cv2.COLOR_BGR2RGB))
 
-            rgbd1 = o3d.create_rgbd_image_from_color_and_depth(color1, depth1, convert_rgb_to_intensity = False)
-            pcd1 = o3d.create_point_cloud_from_rgbd_image(rgbd1, pinhole_camera1_intrinsic)
+            rgbd1 = o3d.geometry.RGBDImage.create_rgbd_image_from_color_and_depth(color1, depth1, convert_rgb_to_intensity = False)
+            pcd1 = o3d.geometry.PointCloud.create_point_cloud_from_rgbd_image(rgbd1, pinhole_camera1_intrinsic)
 
-            rgbd2 = o3d.create_rgbd_image_from_color_and_depth(color2, depth2, convert_rgb_to_intensity = False)
-            pcd2 = o3d.create_point_cloud_from_rgbd_image(rgbd2, pinhole_camera2_intrinsic)
+            rgbd2 = o3d.geometry.RGBDImage.create_rgbd_image_from_color_and_depth(color2, depth2, convert_rgb_to_intensity = False)
+            pcd2 = o3d.geometry.PointCloud.create_point_cloud_from_rgbd_image(rgbd2, pinhole_camera2_intrinsic)
 
             time_now =time.time()
-            if time_now - time_beigin < 12:
+            if time_now - time_beigin < 2:
                 pointcloud += pcd2
             else:
                 pointcloud += (pcd1.transform(Transformation) + pcd2)
