@@ -2,7 +2,7 @@ import pyrealsense2 as rs
 import numpy as np
 import cv2
 from datetime import datetime
-from open3d import *
+import open3d as o3d
 import os
 from tools import rgbdTools
 from scipy import optimize
@@ -42,8 +42,9 @@ def recvall(sock, count):
 if __name__=="__main__":
 
     npoints = 1024
-    obj_list = [1,2,3,6,7,8,9,10,11]
-    obj_list = ['backpack','polar bear','box','duck','turtle','whale','dog','elephant','horse']
+    obj_list = list(range(8))
+    obj_list = ['box','polar bear','duck','turtle','whale','dog','elephant','horse']
+    obj_list = ['盒子','北极熊','小黄鸭','小海龟','独角鲸','灰狗','大象','马']
     color_list = [[96/255,96/255,96/255],[1,97/255,0],[227/255,207/255,87/255],[176/255,224/255,230/255],
                 [106/255,90/255,205/255],[56/255,94/255,15/255],[61/255,89/255,171/255],[51/255,161/255,201/255],
                 [178/255,34/255,34/255],[138/255,43/255,226/255]]
@@ -66,7 +67,7 @@ if __name__=="__main__":
     # get camera intrinsics
     intr = profile.get_stream(rs.stream.color).as_video_stream_profile().get_intrinsics()
     # print(intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
-    pinhole_camera_intrinsic = PinholeCameraIntrinsic(intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
+    pinhole_camera_intrinsic = o3d.camera.PinholeCameraIntrinsic(intr.width, intr.height, intr.fx, intr.fy, intr.ppx, intr.ppy)
     # print(type(pinhole_camera_intrinsic))
     
     cv2.namedWindow('Color Stream', cv2.WINDOW_AUTOSIZE)
@@ -76,10 +77,10 @@ if __name__=="__main__":
 
 
     geometrie_added = False
-    vis = Visualizer()
+    vis = o3d.visualization.Visualizer()
     #vis.create_window("Pointcloud",640,480)
     vis.create_window("Pointcloud")
-    pointcloud = PointCloud()
+    pointcloud = o3d.geometry.PointCloud()
     i = 0
     plane_flag = 0
 
@@ -148,8 +149,8 @@ if __name__=="__main__":
         Pt = []
         obj_pt = []
         colors =[] 
-        pcd = open3d.geometry.PointCloud()
-        obj_pcd = open3d.geometry.PointCloud()
+        pcd = o3d.geometry.PointCloud()
+        obj_pcd = o3d.geometry.PointCloud()
         pre_obj_index = 0
 
         # print(x_max, x_min , z_max, z_min)
@@ -174,7 +175,7 @@ if __name__=="__main__":
             label_index = ''
             obj_pt2 = copy.deepcopy(obj_pt)
             if len(obj_pt2) > 0:
-                obj_pcd.points =  open3d.utility.Vector3dVector(np.array(obj_pt2))
+                obj_pcd.points =  o3d.utility.Vector3dVector(np.array(obj_pt2))
                 obj_pcd.paint_uniform_color([1.0,0,0])
 
             if len(obj_pt) > 0:
@@ -205,14 +206,14 @@ if __name__=="__main__":
                 print(len(obj_pt2))
                 obj_pcd.paint_uniform_color(color_list[int(label_index)+1])
 
-            pcd.points = open3d.utility.Vector3dVector(np.array(Pt))
-            pcd.colors = open3d.utility.Vector3dVector(np.array(colors))
+            pcd.points = o3d.utility.Vector3dVector(np.array(Pt))
+            pcd.colors = o3d.utility.Vector3dVector(np.array(colors))
 
         else:                
-            depth = Image(depth_image)
-            color = Image(color_image)
-            rgbd = create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
-            pcd = create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
+            depth = o3d.geometry.Image(depth_image)
+            color = o3d.geometry.Image(color_image)
+            rgbd = o3d.geometry.RGBDImage.create_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
+            pcd = o3d.geometry.PointCloud.create_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
 
              
         # print('obj_num:',obj_num)
@@ -222,9 +223,6 @@ if __name__=="__main__":
 
         cv2.imshow('Color Stream', color_image1)
         cv2.imshow('Depth Stream', depth_color_image )
-
-
-
 
         if not pcd:
             continue
