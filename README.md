@@ -1,3 +1,5 @@
+This repository may be no longer maintained after my graduation(2020.1.3).  
+---
 # 3D Reconstruction with RealSenseD435
 Some personal implementation of 3d reconstruction with Realsense D435.
 
@@ -17,23 +19,23 @@ Some personal implementation of 3d reconstruction with Realsense D435.
 * **Object Recognition Using PointNet**
 > Realtime 3d object partial pointcloud recognition based on PointNet.
  
-* **Stereo Vision Using Double RealSense RGB cameras**
-> to be done
 
 ## Screenshots
 reconstruction of a Polar bear
 <!-- ![result](./Doc/bear.gif) -->
-<img src="./Doc/bear.gif" height="350" width="" >
+<img src="./Doc/bear.gif" height="200" width="" >
 
-![result](./Doc/bear2.gif)
+modified by meshlab
+<img src="./Doc/bear2.gif" height="200" width="" >
+
 
 realtime registration of pointclouds from two cams.
-<img src="./Doc/doubleCam.gif" height="350" width="" >
+<img src="./Doc/doubleCam.gif" height="200" width="" >
 
 Realtime object recognition using PointNet.
 
-<img src="./Doc/PointNet.png" height="350" width="" >
+<img src="./Doc/PointNet.png" height="300" width="" >
 
 <!-- ![result](./Doc/doubleCam.gif) -->
-<img src="./Doc/workbench.jpg" height="300" width="" >
+<img src="./Doc/workbench.jpg" height="200" width="" >
 
