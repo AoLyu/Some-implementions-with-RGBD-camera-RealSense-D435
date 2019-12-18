@@ -99,8 +99,8 @@ if __name__=="__main__":
             depth = o3d.geometry.Image(depth_image)
             color = o3d.geometry.Image(color_image)
 
-            rgbd = o3d.geometry.create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
-            pcd = o3d.geometry.create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
+            rgbd = o3d.geometry.RGBDImage.create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
+            pcd = o3d.geometry.PointCloud.create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
 
             if not pcd:
                 continue

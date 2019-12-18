@@ -17,7 +17,7 @@ def saveCurrentRGBD(vis):
     cv2.imwrite('./output/color_'+str(view_ind)+'.png',color_image1)
     o3d.io.write_point_cloud('./output/pointcloud_'+str(view_ind)+'.pcd', pcd)
     print('No.'+str(view_ind)+' shot is saved.' )
-    view_ind += 1
+
     return False
 
 def breakLoop(vis):
@@ -37,6 +37,11 @@ def change_background_color(vis):
     # background_color ~=backgroundColorFlag
     return False
 
+key_to_callback={}
+key_to_callback[ord(" ")] = saveCurrentRGBD
+key_to_callback[ord("Q")] = breakLoop
+key_to_callback[ord("K")] = change_background_color
+
 if __name__=="__main__":
     align = rs.align(rs.stream.color)
 
@@ -54,7 +59,9 @@ if __name__=="__main__":
     
     geometrie_added = False
     vis = o3d.visualization.VisualizerWithKeyCallback()
-    vis.create_window("Pointcloud")
+
+
+    vis.create_window("Pointcloud",640,480)
     pointcloud = o3d.geometry.PointCloud()
 
     vis.register_key_callback(ord(" "), saveCurrentRGBD)
@@ -94,8 +101,8 @@ if __name__=="__main__":
             depth = o3d.geometry.Image(depth_image)
             color = o3d.geometry.Image(color_image)
 
-            rgbd = o3d.geometry.create_rgbd_image_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
-            pcd = o3d.geometry.create_point_cloud_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
+            rgbd = o3d.geometry.RGBDImage.create_from_color_and_depth(color, depth, convert_rgb_to_intensity = False)
+            pcd = o3d.geometry.PointCloud.create_from_rgbd_image(rgbd, pinhole_camera_intrinsic)
             pcd.transform([[1,0,0,0],[0,-1,0,0],[0,0,-1,0],[0,0,0,1]])
             # pcd = voxel_down_sample(pcd, voxel_size = 0.003)
 
@@ -121,7 +128,7 @@ if __name__=="__main__":
                     os.makedirs('./output')
                 cv2.imwrite('./output/depth_'+str(view_ind)+'.png',depth_image)
                 cv2.imwrite('./output/color_'+str(view_ind)+'.png',color_image1)
-                o3d.write_point_cloud('./output/pointcloud_'+str(view_ind)+'.pcd', pcd)
+                o3d.io.write_point_cloud('./output/pointcloud_'+str(view_ind)+'.pcd', pcd)
                 print('No.'+str(view_ind) + ' shot is saved.' )
                 view_ind += 1
 
