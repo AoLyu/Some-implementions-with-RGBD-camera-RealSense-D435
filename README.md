@@ -8,14 +8,14 @@ Some personal implementation of 3d reconstruction with Realsense D435.
 > 2.Record RGBD stream as '.bag' file
 
 > 3.Read RGBD '.bag' file
-* **3D Object Reconstruction Based on Muti-view RGBD Images Using A Turntable**
-> Using a turntable to reconstruct an object's 3d pointcloud.
+* **3D Object Reconstruction Based on Muti-view RGBD Images Using An A4 paper**
+> Using an A4 paper to reconstruct an object's 3d pointcloud.
 
 * **Realtime 3D Reconstruction Using Double Opposing RealSenses**
-> Using a double side chessBoard.
+> Using a double side chessBoard to realtime registrating pointclouds from two opposite rgbd camera.
 
 * **Object Recognition Using PointNet**
-
+> Realtime 3d object partial pointcloud recognition based on PointNet.
  
 * **Stereo Vision Using Double RealSense RGB cameras**
 > to be done
@@ -35,7 +35,5 @@ Realtime object recognition using PointNet.
 <img src="./Doc/PointNet.png" height="350" width="" >
 
 <!-- ![result](./Doc/doubleCam.gif) -->
-<img src="./Doc/work_platform.jpg" height="350" width="" >
+<img src="./Doc/workbench.jpg" height="300" width="" >
 
-## Platform
-Ubuntu 16.04
