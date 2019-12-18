@@ -22,20 +22,22 @@ Some personal implementation of 3d reconstruction with Realsense D435.
 
 ## Screenshots
 reconstruction of a Polar bear
-<!-- ![result](./Doc/bear.gif) -->
+
 <img src="./Doc/bear.gif" height="200" width="" >
 
 modified by meshlab
+
 <img src="./Doc/bear2.gif" height="200" width="" >
 
 
 realtime registration of pointclouds from two cams.
+
 <img src="./Doc/doubleCam.gif" height="200" width="" >
 
 Realtime object recognition using PointNet.
 
 <img src="./Doc/PointNet.png" height="300" width="" >
 
-<!-- ![result](./Doc/doubleCam.gif) -->
+
 <img src="./Doc/workbench.jpg" height="200" width="" >
 
