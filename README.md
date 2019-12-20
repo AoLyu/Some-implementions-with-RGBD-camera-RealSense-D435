@@ -1,5 +1,3 @@
-This repository may be no longer maintained after my graduation(2020.1.3).  
----
 # 3D Reconstruction with RealSenseD435
 Some personal implementation of 3d reconstruction with Realsense D435.
 
