@@ -18,19 +18,19 @@
 3. `python interfaceVersion.py` 
 it will look like this,
 <img src="./doc/pic1.png" height="300" width="" >
-4. press =='a'==  **three times** to calculate the plane coefficient and registrate current view pointcloud to global coordinate system.
+4. press =='a'==  **three times** (on the cv2 window) to calculate the plane coefficient and registrate current view pointcloud to global coordinate system.
 <img src="./doc/visualization.png" height="350" width="" >
 for top two picture,the same color means the same point.
 
-5. press 's' to save current pointcloud showed in o3d visualizer,you will see 'global.pcd' and 'global.ply' in the source folder.
+5. press 's' (on the cv2 window) to save current pointcloud showed in o3d visualizer,you will see 'global.pcd' and 'global.ply' in the source folder.
 or adjust the paper(and object ) , press 'a' to see the new registration result. 
 
-6. keep press 's' or 'a' ,to get a closed loop.
-you will get follow result.
+6. keep press 's' or 'a' (on the cv2 window),to get a closed loop,and press 'q' (on the cv2 window) to quit.
+you will get following result.
 <img src="./doc/stapler.gif" height="100" width="" >
 <img src="./doc/deer.gif" height="100" width="" >
 
-7. when you get two parts pointcloud of an object,change 'manual_registration.py' line 56,and line 58, and `python manual_registration.py' ,press 'q',then shift + left click to pick corresponding points(at least 3 pair) in two part pointclouds of an object.you will get 
+7. when you get two parts pointcloud of an object,change 'manual_registration.py' line 56,and line 58, and `python manual_registration.py' ,press 'q' (on the o3d window),then shift + left click to pick corresponding points(at least 3 pairs) in two part pointclouds of an object.you will get 
 <img src="./doc/ink_1.png" height="300" width="" >
 <img src="./doc/ink_2.png" height="300" width="" >
 

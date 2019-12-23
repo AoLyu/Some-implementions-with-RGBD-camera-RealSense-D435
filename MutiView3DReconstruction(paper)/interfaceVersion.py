@@ -59,7 +59,7 @@ if __name__=="__main__":
     _,_,temPoint3 = template_p.getPt()
     temFeatureList ,tem_xyr = template_p.getFeature()
 
-    print("press 'a' three times to calculate the table plane coefficient.\n")
+    print("press 'a' three times to calculate the table plane coefficient(on the cv2 window).\n")
     
     
     # temFeatureList,tem_new_xyr = registration.extractFeatures(temPoint2,tem_old_xyr,n = 3)
@@ -150,8 +150,8 @@ if __name__=="__main__":
                 # o3d.visualization.draw_geometries([Point2])
                 FeatureList,new_xyr = registration.extractFeatures(Point2,old_xyr,n = 3)
 
-                print("press 'a' to get next view.\n")
-                print("or press 's' to save current registrated pointcloud.\n")
+                print("press 'a' to get next view(on the cv2 window).\n")
+                print("or press 's' to save current registrated pointcloud(on the cv2 window).\n")
                 if 1:
                     # print(preFeatureList)
                     # print(1)
@@ -193,8 +193,8 @@ if __name__=="__main__":
                     pointcloud = pointcloud.select_down_sample(ind)
                     vis.add_geometry(pointcloud)
                 i+=1
-                print("press 'a' to get next view.\n")
-                print("or press 's' to get current registrated pointcloud.\n")
+                print("press 'a' to get next view(on the cv2 window).\n")
+                print("or press 's' to get current registrated pointcloud(on the cv2 window).\n")
 
         elif key & 0xFF == ord('s') and i > 2:
             globalPointcloud += Point4.transform(Trans_init)
@@ -206,8 +206,8 @@ if __name__=="__main__":
             o3d.io.write_point_cloud('global.ply',globalPointcloudcopy)
             o3d.io.write_point_cloud('global.pcd',globalPointcloudcopy)
             print('global is saved!\n\n')
-            print("press 'a' to get next view.\n")
-            print("or press 's' to get current registrated pointcloud.\n")
+            print("press 'a' to get next view(on the cv2 window).\n")
+            print("or press 's' to get current registrated pointcloud(on the cv2 window).\n")
             preImage = color_image1.copy()
             preFeatureList = FeatureList.copy()
             pre_xyr = new_xyr.copy()
