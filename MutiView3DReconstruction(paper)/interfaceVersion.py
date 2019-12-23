@@ -150,8 +150,8 @@ if __name__=="__main__":
                 # o3d.visualization.draw_geometries([Point2])
                 FeatureList,new_xyr = registration.extractFeatures(Point2,old_xyr,n = 3)
 
-                print("press 'a' to get next view.")
-                print("or press 's' to save current registrated pointcloud.")
+                print("press 'a' to get next view.\n")
+                print("or press 's' to save current registrated pointcloud.\n")
                 if 1:
                     # print(preFeatureList)
                     # print(1)
@@ -193,7 +193,7 @@ if __name__=="__main__":
                     pointcloud = pointcloud.select_down_sample(ind)
                     vis.add_geometry(pointcloud)
                 i+=1
-                print("press 'a' to get next view.")
+                print("press 'a' to get next view.\n")
                 print("or press 's' to get current registrated pointcloud.\n")
 
         elif key & 0xFF == ord('s') and i > 2:
@@ -205,7 +205,9 @@ if __name__=="__main__":
             globalPointcloudcopy = globalPointcloudcopy.select_down_sample(ind)
             o3d.io.write_point_cloud('global.ply',globalPointcloudcopy)
             o3d.io.write_point_cloud('global.pcd',globalPointcloudcopy)
-            print('global is saved!')
+            print('global is saved!\n\n')
+            print("press 'a' to get next view.\n")
+            print("or press 's' to get current registrated pointcloud.\n")
             preImage = color_image1.copy()
             preFeatureList = FeatureList.copy()
             pre_xyr = new_xyr.copy()
