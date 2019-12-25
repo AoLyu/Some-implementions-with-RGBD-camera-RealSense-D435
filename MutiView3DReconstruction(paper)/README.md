@@ -7,6 +7,14 @@
 * [PyRealsense2](https://pypi.org/project/pyrealsense2/) == 2.17.1.457  
 * [Open3D ](https://github.com/IntelVCL/Open3D) == 0.8.0
 
+## Usage:
+to reproduce the dog's 3d point cloud
+```
+python demo.py
+```
+you will see the result in the "output" folder.
+
+<img src="./doc/dog.gif" height="300" width="" >
 
 ## Usage:
 1. print 'template.pdf' at real size first.
