@@ -22,6 +22,7 @@ Some personal implementation of 3d reconstruction with Realsense D435.
 <img src="./Doc/workbench.jpg" height="200" width="" >
 
 point cloud of a toy dog
+
 <img src="./Doc/dog.gif" height="200" width="" >
 
 realtime registration of pointclouds from two cams.
