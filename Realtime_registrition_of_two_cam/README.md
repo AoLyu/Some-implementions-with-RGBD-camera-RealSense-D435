@@ -12,6 +12,8 @@ You need calibrate two camera first with a doubleside chessboard.
 ```
 python Calibration.py
 ```
+<img src="./doc/chessboard.png" height="250" width="" >
+
 press 's' to save several pictures that ChessBoard appears in both cameras's view. the picture will be saved in the 'output/' directory.
 
 then change line 15 `chessBoard_num = your picture num` in the 'Realtime.py'file.
