@@ -1,5 +1,8 @@
 # 3D Object Reconstruction Based on Muti-view RGBD Images Using an A4 Paper
 
+## Screenshot
+<img src="./doc/a3d.gif" height="400" width="" >
+
 ## Requirements
 (tested on my ubuntu 16.04)
 * [NumPy ](https://pypi.org/project/numpy/) == 1.16.4 
