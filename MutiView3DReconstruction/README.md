@@ -41,11 +41,11 @@ you will get following result.
 <img src="./doc/stapler.gif" height="100" width="" >
 <img src="./doc/deer.gif" height="100" width="" >
 
-7. when you get two parts pointcloud of an object,change 'manual_registration.py' line 56,and line 58, and `python manual_registration.py' ,press 'q' (on the o3d window),then shift + left click to pick corresponding points(at least 3 pairs) in two part pointclouds of an object.you will get 
+7. when you get two part point clouds of an object,change 'manual_registration.py' line 56,and line 58, and `python manual_registration.py' ,press 'q' (on the o3d window),then shift + left click to pick corresponding points(at least 3 pairs) in two part pointclouds of an object.you will get 
 <img src="./doc/ink_1.png" height="300" width="" >
 <img src="./doc/ink_2.png" height="300" width="" >
 
-8. you get a complete point cloud of an object,like this
+8. you will get a complete point cloud of an object,like this
 <img src="./doc/ink_box.gif" height="100" width="" >
 
 9. you can use meshlab to modify it,and get the final model.
