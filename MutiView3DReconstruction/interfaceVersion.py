@@ -11,6 +11,7 @@ import os
 import time
 
 
+
 if __name__=="__main__":
     align = rs.align(rs.stream.color)
     #align = rs.align(rs.stream.depth)

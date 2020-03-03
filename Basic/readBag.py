@@ -11,7 +11,7 @@ breakLoopFlag = 0
 backgroundColorFlag = 1
 
 def saveCurrentRGBD(vis):
-    global view_ind
+    global view_ind, depth_image, color_image1, pcd
     if not os.path.exists('./output/'): 
         os.makedirs('./output')
     cv2.imwrite('./output/depth_'+str(view_ind)+'.png',depth_image)
@@ -38,6 +38,10 @@ def change_background_color(vis):
     # background_color ~=backgroundColorFlag
     return False
 
+key_to_callback={}
+key_to_callback[ord(" ")] = saveCurrentRGBD
+key_to_callback[ord("Q")] = breakLoop
+key_to_callback[ord("K")] = change_background_color
 
 if __name__=="__main__":
     parser = argparse.ArgumentParser(description="Read recorded bag file and display depth stream in jet colormap.\

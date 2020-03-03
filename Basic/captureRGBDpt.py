@@ -10,7 +10,7 @@ breakLoopFlag = 0
 backgroundColorFlag = 1
 
 def saveCurrentRGBD(vis):
-    global view_ind
+    global view_ind,depth_image,color_image1,pcd
     if not os.path.exists('./output/'): 
         os.makedirs('./output')
     cv2.imwrite('./output/depth_'+str(view_ind)+'.png',depth_image)
@@ -122,7 +122,7 @@ if __name__=="__main__":
 
             # print("FPS = {0}".format(int(1/(time_end-time_start))))
 
-            # press 's' to save current RGBD images and pointcloud.
+            # press ' ' to save current RGBD images and pointcloud.
             if key & 0xFF == ord(' '):
                 if not os.path.exists('./output/'): 
                     os.makedirs('./output')

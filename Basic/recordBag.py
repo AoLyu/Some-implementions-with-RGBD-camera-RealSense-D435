@@ -37,6 +37,11 @@ def change_background_color(vis):
     # background_color ~=backgroundColorFlag
     return False
 
+key_to_callback={}
+key_to_callback[ord(" ")] = saveCurrentRGBD
+key_to_callback[ord("Q")] = breakLoop
+key_to_callback[ord("K")] = change_background_color
+
 if __name__=="__main__":
 
     bag_name = time.strftime('%Y-%m-%d_%H:%M:%S',time.localtime(time.time()))
