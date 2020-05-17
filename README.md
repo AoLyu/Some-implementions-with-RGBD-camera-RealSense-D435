@@ -17,6 +17,8 @@ Some personal implementation of 3d reconstruction with Realsense D435.
 * **Object Recognition Using PointNet**
 > Realtime 3d object partial pointcloud recognition based on PointNet.
  
+* **Object Pose Estimation Using DenseFusion**
+> Realtime object pose estimation using DenseFusion.
 
 ## Screenshots
 <img src="./Doc/workbench.jpg" height="200" width="" >
@@ -33,6 +35,6 @@ Realtime object recognition using PointNet.
 
 <img src="./Doc/PointNet.png" height="300" width="" >
 
-
-
+Realtime object pose estimation using DenseFusion.
+<img src="./Doc/obj_three.gif" height="300" width="" >
 
