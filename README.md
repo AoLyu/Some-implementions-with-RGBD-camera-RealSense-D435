@@ -36,5 +36,6 @@ Realtime object recognition using PointNet.
 <img src="./Doc/PointNet.png" height="300" width="" >
 
 Realtime object pose estimation using DenseFusion.
+
 <img src="./Doc/obj_three.gif" height="300" width="" >
 
