@@ -107,8 +107,8 @@ if __name__=="__main__":
     colorlist = [(0,255,0),(0,0,255),(255,0,0)]
 
     pcd1 = o3d.io.read_point_cloud('models/obj_{:02d}.pcd'.format(1)).transform(np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]))
-    pcd2 = o3d.io.read_point_cloud('models/obj_{:02d}.pcd'.format(2)).transform(np.array([[-1,0,0,0],[0,-1,0,0],[0,0,1,0],[0,0,0,1]]))
-    pcd3 = o3d.io.read_point_cloud('models/obj_{:02d}.pcd'.format(3)).transform(np.array([[-1,0,0,0],[0,-1,0,0],[0,0,1,0],[0,0,0,1]]))
+    pcd2 = o3d.io.read_point_cloud('models/obj_{:02d}.pcd'.format(2)).transform(np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]))
+    pcd3 = o3d.io.read_point_cloud('models/obj_{:02d}.pcd'.format(3)).transform(np.array([[1,0,0,0],[0,1,0,0],[0,0,1,0],[0,0,0,1]]))
 
     pcd = []
     pcd.append(pcd1)
