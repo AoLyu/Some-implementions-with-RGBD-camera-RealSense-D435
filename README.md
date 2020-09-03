@@ -1,3 +1,5 @@
+### This repository may be no longer maintained.
+---
 # 3D Reconstruction with RealSenseD435
 Some personal implementation of 3d reconstruction with Realsense D435.
 
@@ -33,7 +35,7 @@ realtime registration of pointclouds from two cams.
 
 Realtime object recognition using PointNet.
 
-<img src="./Doc/3d_recognition.png" height="300" width="" >
+<img src="./Doc/3d_recognition.gif" height="300" width="" >
 
 Realtime object pose estimation using DenseFusion.
 
