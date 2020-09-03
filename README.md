@@ -38,6 +38,6 @@ Realtime object recognition using PointNet.
 <img src="./Doc/3d_recognition.gif" height="300" width="" >
 
 Realtime object pose estimation using DenseFusion.
-
+(Using the box pose to control the virtual dog model's pose)
 <img src="./Doc/obj_three.gif" height="300" width="" >
 
