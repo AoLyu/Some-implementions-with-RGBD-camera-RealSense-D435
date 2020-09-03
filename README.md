@@ -33,7 +33,7 @@ realtime registration of pointclouds from two cams.
 
 Realtime object recognition using PointNet.
 
-<img src="./Doc/PointNet.png" height="300" width="" >
+<img src="./Doc/3d_recognition.png" height="300" width="" >
 
 Realtime object pose estimation using DenseFusion.
 
